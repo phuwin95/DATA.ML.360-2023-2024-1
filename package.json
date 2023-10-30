@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@types/papaparse": "^5.3.10",
+    "papaparse": "^5.4.1",
+    "typescript": "^5.2.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.9"
+  }
+}
