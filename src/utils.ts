@@ -1,8 +1,13 @@
 import { readFileSync } from "fs";
 import { parse } from "papaparse";
 
-export const readCsv = (path: string) => {
-  const file = readFileSync(path, "utf8");
+/**
+ *
+ * @param path path to the csv file
+ * @returns the data from the csv file
+ */
+export const readCsv = <T>(path: string, dir = "./data/"): T[] => {
+  const file = readFileSync(`${dir}${path}`, "utf8");
   const { data } = parse(file, { header: true });
-  return data;
+  return data as T[];
 };

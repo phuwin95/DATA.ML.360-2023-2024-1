@@ -1,10 +1,10 @@
 import { Link, Movie, Rating, Tag } from "./src/types";
 import { readCsv } from "./src/utils";
 
-const links = readCsv("./data/links.csv") as Link[];
-const movies = readCsv("./data/movies.csv") as Movie[];
-const ratings = readCsv("./data/ratings.csv") as Rating[];
-const tags = readCsv("./data/tags.csv") as Tag[];
+const links = readCsv<Link>("links.csv");
+const movies = readCsv<Movie>("movies.csv");
+const ratings = readCsv<Rating>("ratings.csv");
+const tags = readCsv<Tag>("tags.csv");
 
 console.log("First 5 rows of each file:");
 console.log(links.slice(0, 5));
