@@ -6,6 +6,7 @@ const movies = readCsv("./data/movies.csv") as Movie[];
 const ratings = readCsv("./data/ratings.csv") as Rating[];
 const tags = readCsv("./data/tags.csv") as Tag[];
 
+console.log("First 5 rows of each file:");
 console.log(links.slice(0, 5));
 console.log(movies.slice(0, 5));
 console.log(ratings.slice(0, 5));
