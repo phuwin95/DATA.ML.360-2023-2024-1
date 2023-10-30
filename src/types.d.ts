@@ -23,3 +23,22 @@ export interface Tag {
   tag: string;
   timestamp: string;
 }
+
+export interface UserByMoviePrediction {
+  /**
+   * correlation between the user and the user we are trying to predict
+   */
+  correlation: number;
+  /**
+   * userId
+   */
+  userId: string;
+  /**
+   * rating of the movie by the user
+   */
+  rating: number;
+  /**
+   * value of the mean of the user's rating
+   */
+  mean: number;
+}
