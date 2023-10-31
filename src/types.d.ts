@@ -13,7 +13,7 @@ export interface Movie {
 export interface Rating {
   userId: string;
   movieId: string;
-  rating: string;
+  rating: string | number;
   timestamp: string;
 }
 
@@ -42,3 +42,9 @@ export interface UserByMoviePrediction {
    */
   mean: number;
 }
+
+export type UserMap = {
+  userId: string;
+  movies: string[];
+  ratings: Partial<Rating>[];
+};
