@@ -1,13 +1,27 @@
 # DATA.ML.360-2023-2024-1
 
-Docker is required to run this project.
 
-## Build
-docker build -t recommender-system-assignment .
+## Docker
+Docker is recommended to run this project.
 
-## Dev
-docker-compose up
+### Build
+`docker build -t recommender-system-assignment .`
 
-## Run
-docker run recommender-system-assignment
+### Run
+`docker run recommender-system-assignment`
+
+### Dev
+`docker-compose up`
+
+## Local without Docker
+
+### Install
+`npm run install`
+
+### Run
+`npm run program`
+
+### Dev
+`npm run start`
+
 
