@@ -47,4 +47,5 @@ export type UserMap = {
   userId: string;
   movies: string[];
   ratings: Partial<Rating>[];
+  mean: number;
 };

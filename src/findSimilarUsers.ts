@@ -22,6 +22,7 @@ const findSimilarUsers = (
     mainUserRatings: number[];
     otherUserRatings: number[];
   }[];
+  console.log(userMap["2"]);
 
   // define the threshold count
   const intersectionThresholdCount = main.movies.length * intersectionThreshold;
@@ -31,6 +32,12 @@ const findSimilarUsers = (
     const { movies, ratings } = userMap[key];
 
     // find the intersection of movies
+    // main.ratings [{movieId:1, rating:2},{movieId:2, rating:3}, {movieId:3, rating:4}]
+    // main.movies [1,2,3]
+    // ratings [{movieId:2, rating:3},{movieId:3, rating:6}, {movieId:4, rating:4}]
+    // movies [2,3,6]
+
+    // [2,3]
     const intersection = main.movies.filter((x) => movies.includes(x));
 
     // skip if no intersection
@@ -44,12 +51,12 @@ const findSimilarUsers = (
     const mainUserRatings = intersection.map(
       (movieId) =>
         main.ratings.find((x) => x.movieId === movieId)?.rating as number
-    );
+    ); // [3, 4]
 
     // get the ratings for the intersection for the other user
     const otherUserRatings = intersection.map(
       (movieId) => ratings.find((x) => x.movieId === movieId)?.rating as number
-    );
+    ); // [3, 6]
 
     // find the pearson correlation
     const correlation = pearsonCorrelation(mainUserRatings, otherUserRatings);
