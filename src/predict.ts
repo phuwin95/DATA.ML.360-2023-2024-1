@@ -2,10 +2,13 @@ import { UserByMoviePrediction } from "./types";
 
 /**
  * Returns the predicted rating for a movie
- * @param a array of numbers
- * @param userSet array of users
+ * @param ratingMean mean of the user's ratings
+ * @param userSet array of users that is used to predict the rating
  */
-export const predict = (meanA: number, userSet: UserByMoviePrediction[]) => {
+export const predict = (
+  ratingMean: number,
+  userSet: UserByMoviePrediction[]
+) => {
   let numerator = 0;
   let denominator = 0;
   for (let i = 0; i < userSet.length; i++) {
@@ -13,5 +16,5 @@ export const predict = (meanA: number, userSet: UserByMoviePrediction[]) => {
     numerator += correlation * (rating - mean);
     denominator += correlation;
   }
-  return meanA + numerator / denominator;
+  return ratingMean + numerator / denominator;
 };
