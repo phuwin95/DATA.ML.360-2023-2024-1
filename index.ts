@@ -31,17 +31,21 @@ const userMap = ratings.reduce((acc, curr) => {
   acc[userId].movies.push(movieId);
   acc[userId].ratings.push({
     movieId,
-    rating: Number(rating), // convert to number
+    rating: Number(rating),
   });
   return acc;
 }, {} as Record<string, UserMap>);
 
 // change this to a corresponding user
-const USER_ID = "5";
+const USER_ID = 5;
 // change this to a corresponding threshold. This threshold is the percentage of movies that the two users have in common
-const INTERSECTION_THRESHOLD = 0.05;
+const INTERSECTION_THRESHOLD = 0.2;
 
-const similarUsers = findSimilarUsers(USER_ID, userMap, INTERSECTION_THRESHOLD);
+const similarUsers = findSimilarUsers(
+  USER_ID.toString(),
+  userMap,
+  INTERSECTION_THRESHOLD
+);
 console.log(`Similar users to user ${USER_ID}:`);
 similarUsers.forEach((x) => {
   console.log(`${x.user.userId} has a correlation of ${x.correlation}`);
@@ -50,4 +54,17 @@ similarUsers.forEach((x) => {
   console.log("--------------------");
 });
 
-const predictions = getMoviePredictions(userMap[USER_ID], similarUsers);
+const predictions = getMoviePredictions(
+  userMap[USER_ID],
+  similarUsers,
+  10,
+  0.5
+);
+console.log(`Predictions for user ${USER_ID}:`);
+predictions.forEach((x) => {
+  const movie = x.movieId.padStart(4);
+  const prediction = x.prediction.toFixed(2);
+  console.log(
+    `Movie ${movie} (predicted rating: ${prediction}) - (through similar ${x.fromUserLength} users)`
+  );
+});
