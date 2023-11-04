@@ -8,6 +8,7 @@ https://phuwin95.github.io/DATA.ML.360-2023-2024-1/
 The code base provided is designed and developed according to the specifications for Assignment 1 of the course module Recommender Systems. The code structure is based on the programming language known as Typescript. The code has been meticulously designed and structured for easy access and modification.
 
 The code structure is as follows:
+
 |-- data -->  This folder contains the data files (CSV files with data).
 |-- index.ts --> this file contains the main function for running the code. This file includes method calls for different methods structured throughout the code base.
 |-- src
