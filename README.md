@@ -10,15 +10,25 @@ The code base provided is designed and developed according to the specifications
 The code structure is as follows:
 
 |-- data -->  This folder contains the data files (CSV files with data).
+
 |-- index.ts --> this file contains the main function for running the code. This file includes method calls for different methods structured throughout the code base.
+
 |-- src
+
     |-- findSimilarUsers.ts     --> This file contains the method in which finding similar users to a give user has been handled.
+    
     |-- getMoviePredictions.ts  --> This file contains the method in which for a given user, the prediction of movies are being generated.
+    
     |-- pearsonCorrelation.ts   --> This file contains the method for calculating the pearson correlation.
+    
     |-- predict.ts              --> This file contains the method for predicting the rating for a given movie.
+    
     |-- utils.ts                --> This file contains the code base for utility methods such as reading data from CSV file and finding the mean of an array.
+    
     |-- types.d.ts              --> This file contains the model classes for different object models used throughout the code.
+    
 |-- compose.yaml
+
 |-- Dockerfile
 
 
