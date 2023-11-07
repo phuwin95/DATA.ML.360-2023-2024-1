@@ -1,5 +1,9 @@
 # DATA.ML.360-2023-2024-1
 This is the repository for the course Recommender System's assignments. 
+| Name | Student ID |
+| --- | --- |
+| Phu Nguyen | 150160764 |
+| Thishan Thanushka Jayawardena | 150927237 |
 
 ## Documentation
 Generated using ts-doc and hosted on GitHub Pages:
