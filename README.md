@@ -12,31 +12,31 @@ https://phuwin95.github.io/DATA.ML.360-2023-2024-1/
 The code base provided is designed and developed according to the specifications for Assignment 1 of the course module Recommender Systems. The code structure is based on the programming language known as Typescript. The code has been meticulously designed and structured for easy access and modification.
 
 The code structure is as follows:
-
+```
 |-- data -->  This folder contains the data files (CSV files with data).
 
 |-- index.ts --> this file contains the main function for running the code. This file includes method calls for different methods structured throughout the code base.
 
-|-- src
+|-- src The files contain methods for
 
-    |-- findSimilarUsers.ts     --> This file contains the method in which finding similar users to a give user has been handled.
+    |-- findSimilarUsers.ts     --> ...finding similar users to a give user has been handled.
     
-    |-- getMoviePredictions.ts  --> This file contains the method in which for a given user, the prediction of movies are being generated.
+    |-- getMoviePredictions.ts  --> ...a given user, the prediction of movies are being generated.
     
-    |-- pearsonCorrelation.ts   --> This file contains the method for calculating the pearson correlation.
+    |-- pearsonCorrelation.ts   --> ...for calculating the pearson correlation.
 
-    |-- spearmansCorrelation.ts   --> This file contains the method for calculating the spearmans correlation.
+    |-- spearmansCorrelation.ts   --> ...for calculating the spearmans correlation.
     
-    |-- predict.ts              --> This file contains the method for predicting the rating for a given movie.
+    |-- predict.ts              --> ...for predicting the rating for a given movie.
     
-    |-- utils.ts                --> This file contains the code base for utility methods such as reading data from CSV file and finding the mean of an array.
+    |-- utils.ts                --> ...for utility methods such as reading data from CSV file and finding the mean of an array.
     
-    |-- types.d.ts              --> This file contains the model classes for different object models used throughout the code.
+    |-- types.d.ts              --> ...for different object models used throughout the code.
     
-|-- compose.yaml
+|-- compose.yaml ---> docker compose file for running the assignment with docker-compose
 
-|-- Dockerfile
-
+|-- Dockerfile --> define the docker image that can be used to run the assignment
+```
 
 ## Docker
 Docker is recommended to run this project.
