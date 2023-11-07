@@ -22,7 +22,7 @@ const findSimilarUsers = (
     mainUserRatings: number[];
     otherUserRatings: number[];
   }[];
-  console.log(userMap["2"]);
+  // console.log(userMap["2"]);
 
   // define the threshold count
   const intersectionThresholdCount = main.movies.length * intersectionThreshold;

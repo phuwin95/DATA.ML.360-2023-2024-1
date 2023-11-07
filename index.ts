@@ -1,5 +1,6 @@
 import findSimilarUsers from "./src/findSimilarUsers";
 import getMoviePredictions from "./src/getMoviePredictions";
+import { getSimilarUsers } from "./src/getSimilarUsers";
 import { Link, Movie, Rating, Tag, UserMap } from "./src/types";
 import { mean, readCsv } from "./src/utils";
 
@@ -39,7 +40,7 @@ const userMap = ratings.reduce((acc, curr) => {
 // change this to a corresponding user
 const USER_ID = "5";
 // change this to a corresponding threshold. This threshold is the percentage of movies that the two users have in common
-const INTERSECTION_THRESHOLD = 0.05;
+const INTERSECTION_THRESHOLD = 0.15;
 
 const similarUsers = findSimilarUsers(USER_ID, userMap, INTERSECTION_THRESHOLD);
 console.log(`Similar users to user ${USER_ID}:`);
@@ -50,4 +51,27 @@ similarUsers.forEach((x) => {
   console.log("--------------------");
 });
 
-const predictions = getMoviePredictions(userMap[USER_ID], similarUsers);
+const predictions = getMoviePredictions(
+  userMap[USER_ID],
+  similarUsers,
+  10,
+  0.5
+);
+console.log(`Predictions for user ${USER_ID}:`);
+predictions.forEach((x) => {
+  const movie = x.movieId.padStart(4);
+  const prediction = x.prediction.toFixed(2);
+  console.log(
+    `Movie ${movie} (predicted rating: ${prediction}) - (through similar ${x.fromUserLength} users)`
+  );
+});
+
+console.log("..................")
+
+
+const similarUsersbySpearman = getSimilarUsers(userMap, USER_ID, INTERSECTION_THRESHOLD);
+
+console.log("Similar users for user", USER_ID);
+for (const user of similarUsersbySpearman) {
+  console.log(`User ID: ${user.user}`);
+}

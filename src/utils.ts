@@ -1,6 +1,5 @@
 import { readFileSync } from "fs";
 import { parse } from "papaparse";
-import { UserByMoviePrediction } from "./types";
 
 /**
  *
@@ -22,4 +21,13 @@ export const mean = (x: number[]) => {
   const n = x.length;
   const sum = x.reduce((acc, curr) => acc + curr, 0);
   return sum / n;
+};
+
+/**
+ * find the sum of an array
+ * @param array array of numbers
+ * @returns the sum of the array
+ */
+export const sum = (array: number[]): number => {
+  return array.reduce((acc, curr) => acc + curr, 0);
 };
