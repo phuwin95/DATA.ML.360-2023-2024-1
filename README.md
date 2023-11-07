@@ -39,6 +39,10 @@ The code structure is as follows:
 |-- Dockerfile --> define the docker image that can be used to run the assignment
 ```
 
+## Why Spearman Correlation was chosen?
+Spearman correlation is a non-parametric measure of rank correlation that, due to its distinctive characteristics, is an excellent choice for collaborative filtering in recommender systems. Unlike Pearson correlation, Spearman correlation focuses on monotonic rather than linear connections between variables. This makes it especially robust in circumstances with outliers, scarce user-item interactions, or ordinal ratings. Users' preferences for items are frequently ordinal in the context of recommender systems, and Spearman correlation efficiently represents the relative ordering of these preferences. Furthermore, it is less susceptible to outliers and can yield significant similarity assessments even when data is sparse or linearity assumptions are violated. Spearman correlation supplements Pearson correlation and provides a useful tool for identifying user-item associations, ultimately helping to more accurate and comprehensive suggestions in collaborative filtering applications by taking rank order into account.
+
+
 ## Docker
 Docker is recommended to run this project.
 
