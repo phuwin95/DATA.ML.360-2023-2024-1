@@ -24,6 +24,8 @@ The code structure is as follows:
     |-- getMoviePredictions.ts  --> This file contains the method in which for a given user, the prediction of movies are being generated.
     
     |-- pearsonCorrelation.ts   --> This file contains the method for calculating the pearson correlation.
+
+    |-- spearmansCorrelation.ts   --> This file contains the method for calculating the spearmans correlation.
     
     |-- predict.ts              --> This file contains the method for predicting the rating for a given movie.
     
