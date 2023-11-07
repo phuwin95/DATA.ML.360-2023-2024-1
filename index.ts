@@ -1,5 +1,6 @@
 import findSimilarUsers from "./src/findSimilarUsers";
 import getMoviePredictions from "./src/getMoviePredictions";
+import spearmansCorrelation from "./src/spearmansCorrelation";
 import { Link, Movie, Rating, Tag, UserMap } from "./src/types";
 import { mean, readCsv } from "./src/utils";
 
@@ -46,11 +47,15 @@ const similarUsers = findSimilarUsers(
   userMap,
   INTERSECTION_THRESHOLD
 );
-console.log(`Similar users to user ${USER_ID}:`);
+console.log(`Ten (10) similar users to user ${USER_ID}:`);
 similarUsers.forEach((x) => {
   console.log(`${x.user.userId} has a correlation of ${x.correlation}`);
   console.log(`Mains ratings: [${x.mainUserRatings.join(", ")}]`);
   console.log(`Other ratings: [${x.otherUserRatings.join(", ")}]`);
+  console.log(
+    "Spearman's rank correlation coeffecient: " +
+      spearmansCorrelation(x.mainUserRatings, x.otherUserRatings)
+  );
   console.log("--------------------");
 });
 

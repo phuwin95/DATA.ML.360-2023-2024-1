@@ -1,6 +1,5 @@
 import { readFileSync } from "fs";
 import { parse } from "papaparse";
-import { UserByMoviePrediction } from "./types";
 
 /**
  *
