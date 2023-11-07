@@ -15,7 +15,8 @@ The code structure is as follows:
 ```
 |-- data -->  This folder contains the data files (CSV files with data).
 
-|-- index.ts --> this file contains the main function for running the code. This file includes method calls for different methods structured throughout the code base.
+|-- index.ts --> this file contains the main function for running the code.
+                This file includes method calls for different methods structured throughout the code base.
 
 |-- src The files contain methods for
 
