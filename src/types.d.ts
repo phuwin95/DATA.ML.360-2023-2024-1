@@ -49,3 +49,15 @@ export type UserMap = {
   ratings: Partial<Rating>[];
   mean: number;
 };
+
+export type MoviePrediction = {
+  movieId: string;
+  /**
+   * The predicted rating
+   */
+  prediction: number;
+  /**
+   * The amount of similar users that have rated the movie. For logging purposes
+   */
+  fromUserLength: number;
+};

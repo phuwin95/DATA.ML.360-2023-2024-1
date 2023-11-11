@@ -7,13 +7,15 @@ import { UserMap } from "./types";
  * @param userMap user map with formatted data
  * @param intersectionThreshold defines the percentage of intersection between two users. Default 0
  * @param amount amount of similar users to return. Default to 10
+ * @param correlationFunction correlation function to use. Default to pearson correlation
  * @returns
  */
 const findSimilarUsers = (
   id: string,
   userMap: Record<string, UserMap>,
   intersectionThreshold = 0,
-  amount = 10
+  amount = 10,
+  correlationFunction = pearsonCorrelation
 ) => {
   const main = userMap[id];
   const usersWithSimilarties = [] as {
@@ -58,7 +60,7 @@ const findSimilarUsers = (
     ); // [3, 6]
 
     // find the pearson correlation
-    const correlation = pearsonCorrelation(mainUserRatings, otherUserRatings);
+    const correlation = correlationFunction(mainUserRatings, otherUserRatings);
 
     // skip if correlation is NaN or less than or equal to 0
     if (isNaN(correlation) || correlation <= 0) return;

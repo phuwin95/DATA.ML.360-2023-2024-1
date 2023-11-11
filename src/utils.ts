@@ -1,5 +1,6 @@
 import { readFileSync } from "fs";
 import { parse } from "papaparse";
+import { Rating, UserMap } from "./types";
 
 /**
  *
@@ -21,4 +22,28 @@ export const mean = (x: number[]) => {
   const n = x.length;
   const sum = x.reduce((acc, curr) => acc + curr, 0);
   return sum / n;
+};
+
+export const mapUsers = (ratings: Rating[]) => {
+  return ratings.reduce((acc, curr) => {
+    const { userId, movieId, rating } = curr;
+    if (!acc[userId]) {
+      acc[userId] = {
+        mean: mean(
+          ratings
+            .filter((x) => x.userId === userId)
+            .map((x) => Number(x.rating))
+        ),
+        userId,
+        movies: [],
+        ratings: [],
+      };
+    }
+    acc[userId].movies.push(movieId);
+    acc[userId].ratings.push({
+      movieId,
+      rating: Number(rating),
+    });
+    return acc;
+  }, {} as Record<string, UserMap>);
 };

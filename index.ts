@@ -1,75 +1,42 @@
+import { average, minimum } from "./src/aggregations";
 import findSimilarUsers from "./src/findSimilarUsers";
 import getMoviePredictions from "./src/getMoviePredictions";
+import getMoviePredictionsForUser from "./src/getMoviePredictionsForUser";
 import spearmansCorrelation from "./src/spearmansCorrelation";
-import { Link, Movie, Rating, Tag, UserMap } from "./src/types";
-import { mean, readCsv } from "./src/utils";
+import { Rating } from "./src/types";
+import { mapUsers, readCsv } from "./src/utils";
 
-const links = readCsv<Link>("links.csv");
-const movies = readCsv<Movie>("movies.csv");
 const ratings = readCsv<Rating>("ratings.csv");
-const tags = readCsv<Tag>("tags.csv");
 
-console.log("First 5 rows of each file:");
-console.log(links.slice(0, 5));
-console.log(movies.slice(0, 5));
-console.log(ratings.slice(0, 5));
-console.log(tags.slice(0, 5));
+const userMap = mapUsers(ratings);
 
-console.log(`We got ${ratings.length} from ratings.csv`);
+const AMOUNT_OF_MOVIES = 30; // increase this to get more movie predictions
 
-const userMap = ratings.reduce((acc, curr) => {
-  const { userId, movieId, rating } = curr;
-  if (!acc[userId]) {
-    acc[userId] = {
-      mean: mean(
-        ratings.filter((x) => x.userId === userId).map((x) => Number(x.rating))
-      ),
-      userId,
-      movies: [],
-      ratings: [],
-    };
-  }
-  acc[userId].movies.push(movieId);
-  acc[userId].ratings.push({
-    movieId,
-    rating: Number(rating),
-  });
-  return acc;
-}, {} as Record<string, UserMap>);
-
-// change this to a corresponding user
-const USER_ID = 5;
-// change this to a corresponding threshold. This threshold is the percentage of movies that the two users have in common
-const INTERSECTION_THRESHOLD = 0.2;
-
-const similarUsers = findSimilarUsers(
-  USER_ID.toString(),
+const movies1 = getMoviePredictionsForUser({
   userMap,
-  INTERSECTION_THRESHOLD
-);
-console.log(`Ten (10) similar users to user ${USER_ID}:`);
-similarUsers.forEach((x) => {
-  console.log(`${x.user.userId} has a correlation of ${x.correlation}`);
-  console.log(`Mains ratings: [${x.mainUserRatings.join(", ")}]`);
-  console.log(`Other ratings: [${x.otherUserRatings.join(", ")}]`);
-  console.log(
-    "Spearman's rank correlation coeffecient: " +
-      spearmansCorrelation(x.mainUserRatings, x.otherUserRatings)
-  );
-  console.log("--------------------");
+  userId: 1,
+  intersectionThreshold: 0.1,
+  similarUserPercentage: 0.4,
+  amountOfMovies: AMOUNT_OF_MOVIES,
+});
+const movies2 = getMoviePredictionsForUser({
+  userMap,
+  userId: 543,
+  intersectionThreshold: 0.1,
+  similarUserPercentage: 0.3,
+  amountOfMovies: AMOUNT_OF_MOVIES,
+});
+const movies3 = getMoviePredictionsForUser({
+  userMap,
+  userId: 434,
+  intersectionThreshold: 0.1,
+  similarUserPercentage: 0.2,
+  amountOfMovies: AMOUNT_OF_MOVIES,
 });
 
-const predictions = getMoviePredictions(
-  userMap[USER_ID],
-  similarUsers,
-  10,
-  0.5
-);
-console.log(`Predictions for user ${USER_ID}:`);
-predictions.forEach((x) => {
-  const movie = x.movieId.padStart(4);
-  const prediction = x.prediction.toFixed(2);
-  console.log(
-    `Movie ${movie} (predicted rating: ${prediction}) - (through similar ${x.fromUserLength} users)`
-  );
-});
+average([movies1, movies2, movies3]);
+minimum([movies1, movies2, movies3]);
+
+// console.log(group["1"]);
+// console.log(group["2"]);
+// console.log(group["3"]);

@@ -91,7 +91,6 @@ const getMoviePredictions = (
   });
 
   moviesWithPrediction.sort((a, b) => b.prediction - a.prediction); // sort the movies by the predicted rating from highest to lowest
-
   return moviesWithPrediction.slice(0, amount); // trim the array to the amount of movies we want to return
 };
 
