@@ -43,10 +43,21 @@ const filteredPredictionByMinimum = predictionByMinimum.filter(
 filteredPredictionByMinimum.sort(
   (a, b) => b.usersLength - a.usersLength || b.prediction - a.prediction
 );
+console.log('Using minimum method:');
 console.log(filteredPredictionByMinimum.slice(0, 10));
 
-// average([movies1, movies2, movies3]);
 
-// console.log(group["1"]);
-// console.log(group["2"]);
-// console.log(group["3"]);
+
+// Using average method -------------------------------------------------
+const predictionByAverage = average([movies1, movies2, movies3]);
+
+// filter out movies that have less than 2 users
+const filteredPredictionByAverage = predictionByAverage.filter(
+  (x) => x.usersLength >= 2
+);
+// sort by user length then by prediction
+filteredPredictionByAverage.sort(
+  (a, b) => b.usersLength - a.usersLength || b.prediction - a.prediction
+);
+console.log('\nUsing average method:');
+console.log(filteredPredictionByAverage.slice(0, 10));
