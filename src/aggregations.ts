@@ -58,7 +58,7 @@ export const average = (predictions: MoviePrediction[][], defaultValue = 0) => {
               };
             }
             
-            const rating = (prediction + acc[movieId].prediction)/(acc[movieId].usersLength + 1); // we calculate the average rating
+            const rating = ((prediction * acc[movieId].usersLength)+ acc[movieId].prediction)/(acc[movieId].usersLength + 1); // we calculate the average rating
 
             acc[movieId] = {
               movieId,
