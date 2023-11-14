@@ -60,4 +60,8 @@ export type MoviePrediction = {
    * The amount of similar users that have rated the movie. For logging purposes
    */
   fromUserLength: number;
+  /**
+   * The disagreement between the prediction and the actual rating
+   */
+  disagreement?: number;
 };

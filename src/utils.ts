@@ -47,3 +47,35 @@ export const mapUsers = (ratings: Rating[]) => {
     return acc;
   }, {} as Record<string, UserMap>);
 };
+
+export const sortByRating = (
+  myMovies: {
+    disagreement: number | null;
+    movieId: string;
+    prediction: number;
+    fromUserLength: number;
+    predictions: number[];
+  }[],
+  amount = 10
+) =>
+  myMovies
+    .filter((x) => x.fromUserLength >= 2)
+    .sort(
+      (a, b) =>
+        b.fromUserLength - a.fromUserLength || b.prediction - a.prediction
+    )
+    .slice(0, amount);
+
+export const sortByDisagreement = (
+  myMovies: {
+    disagreement: number | null;
+    movieId: string;
+    prediction: number;
+    fromUserLength: number;
+    predictions: number[];
+  }[],
+  amount = 10
+) =>
+  myMovies
+    .sort((a, b) => (a.disagreement ?? 0) - (b.disagreement ?? 0))
+    .slice(0, amount);
