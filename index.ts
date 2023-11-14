@@ -1,8 +1,6 @@
 import { average, minimum } from "./src/aggregations";
-import findSimilarUsers from "./src/findSimilarUsers";
-import getMoviePredictions from "./src/getMoviePredictions";
+import { calculateDisagreement } from "./src/calculateDisagreement";
 import getMoviePredictionsForUser from "./src/getMoviePredictionsForUser";
-import spearmansCorrelation from "./src/spearmansCorrelation";
 import { Rating } from "./src/types";
 import { mapUsers, readCsv } from "./src/utils";
 
@@ -34,30 +32,53 @@ const movies3 = getMoviePredictionsForUser({
   amountOfMovies: AMOUNT_OF_MOVIES,
 });
 
-const predictionByMinimum = minimum([movies1, movies2, movies3]);
+const userPredictionArray = [movies1, movies2, movies3];
+
+const predictionByMinimum = minimum(userPredictionArray);
 // filter out movies that have less than 2 users
 const filteredPredictionByMinimum = predictionByMinimum.filter(
-  (x) => x.usersLength >= 2
+  (x) => x.fromUserLength >= 2
 );
 // sort by user length then by prediction
 filteredPredictionByMinimum.sort(
-  (a, b) => b.usersLength - a.usersLength || b.prediction - a.prediction
+  (a, b) => b.fromUserLength - a.fromUserLength || b.prediction - a.prediction
 );
-console.log('Using minimum method:');
-console.log(filteredPredictionByMinimum.slice(0, 10));
-
-
+console.log("Using minimum method:");
+const withDisagreementMinimum = filteredPredictionByMinimum.map((x) => {
+  const disagreement = calculateDisagreement(x, userPredictionArray);
+  return {
+    ...x,
+    disagreement,
+  };
+});
+// console.log(filteredPredictionByMinimum.slice(0, 10));
+// sort by lowest disagreement first - meaning the most relevant first
+console.log(
+  withDisagreementMinimum.sort((a, b) => a.disagreement - b.disagreement)
+);
 
 // Using average method -------------------------------------------------
-const predictionByAverage = average([movies1, movies2, movies3]);
+const predictionByAverage = average(userPredictionArray);
 
 // filter out movies that have less than 2 users
 const filteredPredictionByAverage = predictionByAverage.filter(
-  (x) => x.usersLength >= 2
+  (x) => x.fromUserLength >= 2
 );
 // sort by user length then by prediction
 filteredPredictionByAverage.sort(
-  (a, b) => b.usersLength - a.usersLength || b.prediction - a.prediction
+  (a, b) => b.fromUserLength - a.fromUserLength || b.prediction - a.prediction
 );
-console.log('\nUsing average method:');
-console.log(filteredPredictionByAverage.slice(0, 10));
+console.log("\nUsing average method:");
+
+const withDisagreementAverage = filteredPredictionByAverage.map((x) => {
+  const disagreement = calculateDisagreement(x, userPredictionArray);
+  return {
+    ...x,
+    disagreement,
+  };
+});
+// console.log(filteredPredictionByAverage.slice(0, 10));
+// sort by lowest disagreement first - meaning the most relevant first
+console.log(
+  withDisagreementAverage.sort((a, b) => a.disagreement - b.disagreement)
+);
