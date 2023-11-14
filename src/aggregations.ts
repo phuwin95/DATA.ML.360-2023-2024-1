@@ -42,40 +42,42 @@ export const minimum = (predictions: MoviePrediction[][], defaultValue = 6) => {
 };
 // TODO
 export const average = (predictions: MoviePrediction[][], defaultValue = 0) => {
+  const aggregated = predictions.reduce(
+    (acc, moviePredictionArray) => {
+      // we loop through the array of movie rating predictions
+      moviePredictionArray.forEach((moviePrediction) => {
+        const { movieId, prediction } = moviePrediction;
 
-    const aggregated = predictions.reduce(
-        (acc, moviePredictionArray) => {
-          // we loop through the array of movie rating predictions
-          moviePredictionArray.forEach((moviePrediction) => {
-            const { movieId, prediction } = moviePrediction;
-            
-            if (!acc[movieId]) {
-              // if the movieId is not in the accumulator, we add it with the default value
-              acc[movieId] = {
-                movieId,
-                prediction: defaultValue,
-                usersLength: 0,
-              };
-            }
-            
-            const rating = ((prediction * acc[movieId].usersLength)+ acc[movieId].prediction)/(acc[movieId].usersLength + 1); // we calculate the average rating
-
-            acc[movieId] = {
-              movieId,
-              prediction: rating,
-              usersLength: acc[movieId].usersLength + 1,
-            };
-          });
-          return acc;
-        }, {} as Record<
-        string,
-        {
-          movieId: string;
-          prediction: number;
-          usersLength: number;
+        if (!acc[movieId]) {
+          // if the movieId is not in the accumulator, we add it with the default value
+          acc[movieId] = {
+            movieId,
+            prediction: defaultValue,
+            usersLength: 0,
+          };
         }
-      >
-    );
 
-    return Object.values(aggregated).map((x) => aggregated[x.movieId]);
+        const rating =
+          (acc[movieId].prediction * acc[movieId].usersLength + prediction) /
+          (acc[movieId].usersLength + 1); // we calculate the average rating
+
+        acc[movieId] = {
+          movieId,
+          prediction: rating,
+          usersLength: acc[movieId].usersLength + 1,
+        };
+      });
+      return acc;
+    },
+    {} as Record<
+      string,
+      {
+        movieId: string;
+        prediction: number;
+        usersLength: number;
+      }
+    >
+  );
+
+  return Object.values(aggregated).map((x) => aggregated[x.movieId]);
 };
