@@ -1,5 +1,5 @@
 import { average, minimum } from "./src/aggregations";
-import { calculateDisagreement } from "./src/calculateDisagreement";
+import { meanAbsoluteDifference } from "./src/meanAbsoluteDifference";
 import getMoviePredictionsForUser from "./src/getMoviePredictionsForUser";
 import { Rating } from "./src/types";
 import {
@@ -42,7 +42,7 @@ const userPredictionArray = [movies1, movies2, movies3];
 const predictionByMinimum = minimum(
   userPredictionArray,
   6,
-  calculateDisagreement
+  meanAbsoluteDifference
 );
 
 console.log("Using minimum method, and sort by ratings:");
@@ -53,7 +53,7 @@ console.log(sortByDisagreement(predictionByMinimum));
 const predictionByAverage = average(
   userPredictionArray,
   0,
-  calculateDisagreement
+  meanAbsoluteDifference
 );
 
 console.log("\nUsing average method, and sort by ratings:");

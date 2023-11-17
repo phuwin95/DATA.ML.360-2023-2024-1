@@ -4,7 +4,7 @@ type DisagreementCalculationFunction = (
   num: number,
   nums: number[]
 ) => number | null;
-// TODO
+
 /**
  * aggregation function that returns the prediction based on the minimum rating. If a user hasn't rated a movie, simply omit it.
  * @param predictions array of movie predictions
