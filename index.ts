@@ -1,63 +1,46 @@
-import { average, minimum } from "./src/aggregations";
-import { meanAbsoluteDifference } from "./src/meanAbsoluteDifference";
-import getMoviePredictionsForUser from "./src/getMoviePredictionsForUser";
-import { Rating } from "./src/types";
-import {
-  mapUsers,
-  readCsv,
-  sortByDisagreement,
-  sortByRating,
-} from "./src/utils";
+import { readCsv, mapUsers } from "./src/utils";
+import { Rating, MoviePrediction } from "./src/types";
+import { generateSequentialGroupRecommendations } from "./src/sequentialGroupRecommendations";
+import { minimum, average } from "./src/aggregations";
+import { sortByRating, sortByDisagreement } from "./src/utils";
 
 const ratings = readCsv<Rating>("ratings.csv");
-
 const userMap = mapUsers(ratings);
+const groupOfUsers = [1, 543, 32];
+const rounds = 3;
 
-const AMOUNT_OF_MOVIES = 30; // increase this to get more movie predictions
+const predictions = generateSequentialGroupRecommendations(userMap, groupOfUsers, rounds);
 
-const movies1 = getMoviePredictionsForUser({
-  userMap,
-  userId: 1,
-  intersectionThreshold: 0.1,
-  similarUserPercentage: 0.4,
-  amountOfMovies: AMOUNT_OF_MOVIES,
-});
-const movies2 = getMoviePredictionsForUser({
-  userMap,
-  userId: 543,
-  intersectionThreshold: 0.1,
-  similarUserPercentage: 0.3,
-  amountOfMovies: AMOUNT_OF_MOVIES,
-});
-const movies3 = getMoviePredictionsForUser({
-  userMap,
-  userId: 32,
-  intersectionThreshold: 0.1,
-  similarUserPercentage: 0.2,
-  amountOfMovies: AMOUNT_OF_MOVIES,
-});
+const displayRecommendations = (
+  predictions: MoviePrediction[][][],
+  method: (
+    predictions: MoviePrediction[][],
+    defaultValue: number
+  ) => {
+    disagreement: number | null;
+    movieId: string;
+    prediction: number;
+    fromUserLength: number;
+    predictions: number[];
+  }[],
+  defaultValue: number,
+  topN: number = 10
+) => {
+  predictions.forEach((roundPredictions, roundIndex) => {
+    const roundFlattenedPredictions = roundPredictions.flat();
+    const recommendations = method([roundFlattenedPredictions], defaultValue);
 
-const userPredictionArray = [movies1, movies2, movies3];
+    console.log(`Round ${roundIndex + 1} - Using ${method.name}, and sort by ratings:`);
+    console.log(sortByRating(recommendations.slice(0, topN)));
 
-const predictionByMinimum = minimum(
-  userPredictionArray,
-  6,
-  meanAbsoluteDifference
-);
+    console.log(`\nRound ${roundIndex + 1} - Using ${method.name}, and sort by disagreement:`);
+    console.log(sortByDisagreement(recommendations.slice(0, topN)));
+  });
+};
 
-console.log("Using minimum method, and sort by ratings:");
-console.log(sortByRating(predictionByMinimum));
-console.log("\nUsing minimum method, and sort by disagreement:");
-console.log(sortByDisagreement(predictionByMinimum));
-// Using average method -------------------------------------------------
-const predictionByAverage = average(
-  userPredictionArray,
-  0,
-  meanAbsoluteDifference
-);
 
-console.log("\nUsing average method, and sort by ratings:");
-console.log(sortByRating(predictionByAverage));
-console.log("\nUsing average method, and sort by disagreement:");
-console.log(sortByDisagreement(predictionByAverage));
-// sort by lowest disagreement first - meaning the most relevant first
+// Display recommendations using the minimum method
+displayRecommendations(predictions, minimum, 6, 10);
+
+// Display recommendations using the average method
+displayRecommendations(predictions, average, 0, 10);
