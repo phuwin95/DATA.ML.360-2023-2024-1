@@ -6,7 +6,8 @@
 
 ## Assignment 3
 An essay and a presentation of the sequential recommender system are provided in the other pdf files.
-A markdown version of this submission file can also be found in [https://github.com/phuwin95/DATA.ML.360-2023-2024-1/blob/assignment-3/submission.md](https://github.com/phuwin95/DATA.ML.360-2023-2024-1/blob/assignment-3/submission.md)
+A markdown version of this submission file can also be found in [https://github.com/phuwin95/DATA.ML.360-2023-2024-1/blob/assignment-3/submission.md](https://github.com/phuwin95/DATA.ML.360-2023-2024-1/blob/assignment-3/submission.md).
+
 We designed a function for the sequential recommender system. The function takes as input the user predictions and returns the best movie to recommend to the user. The function is called `sequentialRecommendation`. 
 
 ### `sequentialRecommendation(userPredictions, rounds, currentRound = 0)`
