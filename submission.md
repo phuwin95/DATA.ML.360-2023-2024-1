@@ -10,7 +10,7 @@ An essay and a presentation of the sequential recommender system are provided in
 We designed a function for the sequential recommender system. The function takes as input the user predictions and returns the best movie to recommend to the user. The function is called `sequentialRecommendation`. 
 
 ### `sequentialRecommendation(userPredictions, rounds, currentRound = 0)`
-The recursive function takes as input the user predictions and returns the best movie to recommend to the user. The function is described in the following sections.
+The recursive function takes as input the user predictions and returns the best movie to recommend to the users in sequences. The function is described in the following sections.
 ```js
 sequentialRecommendation(movies = [], userPredictions, rounds, currentRound = 0, movie = null) {
   if (currentRound == 0) {
