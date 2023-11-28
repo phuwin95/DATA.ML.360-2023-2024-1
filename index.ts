@@ -1,9 +1,12 @@
 import { readCsv, mapUsers } from "./src/utils";
-import { Movie, Rating, UserMap } from "./src/types";
+import { Movie, Rating } from "./src/types";
 import findSimilarUsers from "./src/findSimilarUsers";
-import getMoviePredictionsForUser from "./src/getMoviePredictionsForUser";
 import getMoviePredictions from "./src/getMoviePredictions";
-import { atomicEngine, groupEngine, whyNotAtomic } from "./src/whyNot";
+import {
+  atomicEngine,
+  groupEngine,
+  positionAbsenteeismEngine,
+} from "./src/whyNot";
 
 const INTERSECTION_THRESHOLD = 0.1;
 const AMOUNT_OF_MOVIES = 10;
@@ -26,8 +29,19 @@ const predictions = getMoviePredictions(
   AMOUNT_OF_MOVIES,
   SIMILAR_USER_PERCENTAGE
 );
-
 const NUM_PI = SIMILAR_USER_PERCENTAGE * similarUsers.length;
+console.log(
+  `Recommended predictions from ${similarUsers.length} users, with at least ${NUM_PI} users rated the movies:`
+);
+predictions.forEach((prediction) => {
+  const { movieId, prediction: score, fromUserLength } = prediction;
+  const movie = movies.find((movie) => movie.movieId === movieId);
+  if (!movie) return;
+  console.log(
+    `* Movie(${movie.movieId}): ${movie.title} - Score: ${score} - From: ${fromUserLength} users`
+  );
+});
+console.log("------");
 
 // we simplify the why-not engine by using the data input from the similar peers.
 console.log("Atomic WhyNot Engine: (based on similar peers):");
@@ -49,7 +63,6 @@ console.log(
 // From observations, we can briefly see that comedies and musicals aren't popular among the similar peers.
 console.log("------");
 console.log("------");
-console.log("------");
 // comedies
 console.log("Group WhyNot Engine: (based on similar peers):");
 console.log(
@@ -69,6 +82,32 @@ console.log(
     similarUsers,
     predictions,
     movies,
+    NUM_PI
+  )}`
+);
+
+console.log("------");
+console.log("------");
+// comedies
+console.log("Position absenteeism WhyNot Engine: (based on similar peers):");
+console.log(
+  `- ${positionAbsenteeismEngine(
+    "858",
+    similarUsers,
+    predictions,
+    movies,
+    2,
+    NUM_PI
+  )}`
+);
+
+console.log(
+  `- ${positionAbsenteeismEngine(
+    "1136",
+    similarUsers,
+    predictions,
+    movies,
+    5,
     NUM_PI
   )}`
 );

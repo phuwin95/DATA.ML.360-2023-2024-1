@@ -137,3 +137,52 @@ export const groupEngine = (
       3
     )}`;
 };
+
+export const positionAbsenteeismEngine = (
+  movieId: string,
+  similarUsers: {
+    user: UserMap;
+    correlation: number;
+    mainUserRatings: number[];
+    otherUserRatings: number[];
+  }[],
+  predictions: {
+    movieId: string;
+    prediction: number;
+    fromUserLength: number;
+  }[],
+  movies: Movie[],
+  rank: number,
+  numPi: number = 10
+) => {
+  const movie = movies.find((movie) => movie.movieId === movieId);
+  // CASE when movie is not found
+  if (!movie) return `Movie ${movieId} not found`;
+
+  // we get the title of the movie for loggin purposes
+  const { title } = movie;
+
+  // find the location of the movie in the predictions
+  const index = predictions.findIndex(
+    (prediction) => prediction.movieId === movieId
+  );
+
+  if (index <= rank && index >= 0)
+    return `Movie ${title} at ${index + 1} is already in top ${rank + 1}`;
+
+  // getting the result from the whyNotAtomic function
+  const { peerCount, score } = whyNotAtomic(movieId, similarUsers);
+
+  if (peerCount === 0) return `No similar peers have rated this movie ${title}`;
+  if (peerCount < numPi)
+    return `Only ${peerCount} similar peers have rated ${title} (less than the required ${numPi})`;
+
+  const rankPrediction = predictions[rank].prediction;
+
+  if (rankPrediction > score)
+    return `Similar peers have rated the movie ${title} too low (${score.toPrecision(
+      3
+    )}) to be in top ${rank + 1}, the rating at top ${
+      rank + 1
+    } is ${rankPrediction.toPrecision(3)}`;
+};
