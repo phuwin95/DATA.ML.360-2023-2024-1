@@ -79,7 +79,6 @@ const getMoviePredictions = (
 
   // calculate the threshold. If we don't gather less ratings then the thresholds, we don't include the movie in the predictions
   const threshold = amountOfSimilarUsersPercentage * similarUsers.length;
-
   Object.keys(userSetObject).forEach((movieId) => {
     if (userSetObject[movieId].length < threshold) return; // if the movie has less ratings than the threshold, skip
     const prediction = predict(user.mean, userSetObject[movieId]); // predict the rating

@@ -7,7 +7,7 @@ export interface Link {
 export interface Movie {
   movieId: string;
   title: string;
-  genres: string[];
+  genres: string;
 }
 
 export interface Rating {

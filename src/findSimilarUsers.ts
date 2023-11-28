@@ -27,7 +27,6 @@ const findSimilarUsers = (
 
   // define the threshold count
   const intersectionThresholdCount = main.movies.length * intersectionThreshold;
-
   Object.keys(userMap).forEach((key) => {
     if (key === id) return; // skip the same user
     const { movies, ratings } = userMap[key];
