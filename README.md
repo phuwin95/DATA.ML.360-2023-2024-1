@@ -19,22 +19,27 @@ The code structure is as follows:
 
 |-- src
 
-    |-- findSimilarUsers.ts     --> This file contains the method in which finding similar users to a give user has been handled.
+    |-- aggregations.ts  --> This file contains the method for aggregating using either minimum method or average me the data for a given user.
+
+    |-- findSimilarUsers.ts  --> This file contains the method in which finding similar users to a give user has been handled.
     
     |-- getMoviePredictions.ts  --> This file contains the method in which for a given user, the prediction of movies are being generated.
+
+    |-- getMoviePredictionsForUser.ts  --> This file contains the method in which for a given user, the prediction of movies are being generated.
+
+    |-- meanAbsoluteDifference.ts  --> This file contains the method for calculating the mean absolute difference between a number and an array of numbers.
     
     |-- pearsonCorrelation.ts   --> This file contains the method for calculating the pearson correlation.
     
-    |-- predict.ts              --> This file contains the method for predicting the rating for a given movie.
+    |-- predict.ts  --> This file contains the method for predicting the rating for a given movie.
+
+    |-- spearmansCorrelation.ts  --> This file contains the method for calculating the spearman's correlation.
     
-    |-- utils.ts                --> This file contains the code base for utility methods such as reading data from CSV file and finding the mean of an array.
+    |-- utils.ts  --> This file contains the code base for utility methods such as reading data from CSV file and finding the mean of an array.
     
-    |-- types.d.ts              --> This file contains the model classes for different object models used throughout the code.
+    |-- types.d.ts  --> This file contains the model classes for different object models used throughout the code.
 
-    |-- meanAbsoluteDifference.ts --> This file contains the method for calculating the mean absolute difference between a number and an array of numbers.
-
-    |-- aggregations.ts --> This file contains the method for aggregating using either minimum method or average me the data for a given user.
-
+    |-- whyNot.ts  --> This file contains the method for identifying and determining the reasons for the why not questions.
     
 |-- compose.yaml
 
