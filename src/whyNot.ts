@@ -99,6 +99,15 @@ export const atomicEngine = (
     )}`;
 };
 
+
+/**
+ * 
+ * @param movieIds id of the movies that are part of the group
+ * @param similarUsers array of similar users
+ * @param predictions array of predictions
+ * @param numPi threshold for counting top-k mvoies
+ * @returns the reason why the movies of the genre are not suggested
+ */
 export const groupEngine = (
   movieIds: string[],
   similarUsers: {
@@ -146,6 +155,16 @@ export const groupEngine = (
     )}`;
 };
 
+/**
+ * 
+ * @param movieId id of the movie
+ * @param similarUsers array of similar users
+ * @param predictions array of predictions
+ * @param movies array of movie objects
+ * @param rank position of the movie in the top-k movies
+ * @param numPi threshold for counting top-k mvoies
+ * @returns the reason why the movie is not higher or lower in the top-k movies
+ */
 export const positionAbsenteeismEngine = (
   movieId: string,
   similarUsers: {
