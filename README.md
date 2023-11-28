@@ -58,6 +58,8 @@ Docker is recommended to run this project.
 
 ## Local without Docker
 
+Use at least node version 18.
+
 ### Install
 `npm run install`
 

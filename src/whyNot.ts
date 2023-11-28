@@ -44,6 +44,15 @@ export const whyNotAtomic = (
   };
 };
 
+/**
+ * why not engine for checking why a movie is not in the top-k movies
+ * @param movieId id of the movie
+ * @param similarUsers array of similar users
+ * @param predictions array of predictions
+ * @param movies list of all movies
+ * @param numPi threshold for counting top-k mvoies
+ * @returns the reason why the movie is not suggested in the top-k movies
+ */
 export const atomicEngine = (
   movieId: string,
   similarUsers: {
@@ -103,7 +112,6 @@ export const groupEngine = (
     prediction: number;
     fromUserLength: number;
   }[],
-  movies: Movie[],
   numPi: number = 10
 ) => {
   const result = movieIds.reduce(

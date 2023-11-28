@@ -2,7 +2,7 @@
   "scripts": {
     "start": "tsx watch index.ts",
     "program": "tsx index.ts",
-    "doc": "npx typedoc ./src/* && npx typedoc ./src/*"
+    "doc": "npx typedoc ./src/*"
   },
   "dependencies": {
     "@types/papaparse": "^5.3.10",
