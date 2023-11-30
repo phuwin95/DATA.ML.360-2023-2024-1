@@ -23,20 +23,27 @@ export const whyNotAtomic = (
 ): WhyNotResult => {
   const { peerCount, sum } = similarUsers.reduce(
     (acc, { user }) => {
+      // find the rating of the user for the movie
       const rating = Number(
         user.ratings.find((rating) => rating.movieId === movieId)?.rating
       );
+
+      // if the rating is not a number, we ignore it
       if (isNaN(rating)) return acc;
+
+      // return the sum and the amount of peers that have rated the movie
       return {
         peerCount: acc.peerCount + 1,
         sum: acc.sum + rating,
       };
     },
+    // initial value of the accumulator
     {
       sum: 0,
       peerCount: 0,
     }
   );
+  // calculate the score
   const score = peerCount > 0 ? sum / peerCount : 0;
   return {
     peerCount,
