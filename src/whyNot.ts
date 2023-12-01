@@ -18,7 +18,7 @@ type WhyNotResult = {
  * @param similarUsers array contains info of similar users
  * @returns peer count of how many similar users have rated the movie and the average rating of the similar users
  */
-export const whyNotAtomic = (
+export const aggregateSimilarUsersByMovieId = (
   movieId: string,
   similarUsers: {
     user: UserMap;
@@ -93,8 +93,11 @@ export const atomicEngine = (
   if (predictions.find((prediction) => prediction.movieId === movieId))
     return `Movie ${title} is already in top 10`;
 
-  // getting the result from the whyNotAtomic function
-  const { peerCount, score } = whyNotAtomic(movieId, similarUsers);
+  // getting the result from the aggregateSimilarUsersByMovieId function
+  const { peerCount, score } = aggregateSimilarUsersByMovieId(
+    movieId,
+    similarUsers
+  );
 
   if (peerCount === 0) return `No similar peers have rated this movie ${title}`;
   if (peerCount < numPi)
@@ -137,7 +140,10 @@ export const groupEngine = (
 ) => {
   const result = movieIds.reduce(
     (acc, curr) => {
-      const { peerCount, score } = whyNotAtomic(curr, similarUsers);
+      const { peerCount, score } = aggregateSimilarUsersByMovieId(
+        curr,
+        similarUsers
+      );
       acc.peerCounts.push(peerCount);
       acc.scores.push(score);
       return acc;
@@ -209,8 +215,11 @@ export const positionAbsenteeismEngine = (
   if (index <= rank && index >= 0)
     return `Movie ${title} at ${index + 1} is already in top ${rank + 1}`;
 
-  // getting the result from the whyNotAtomic function
-  const { peerCount, score } = whyNotAtomic(movieId, similarUsers);
+  // getting the result from the aggregateSimilarUsersByMovieId function
+  const { peerCount, score } = aggregateSimilarUsersByMovieId(
+    movieId,
+    similarUsers
+  );
 
   if (peerCount === 0) return `No similar peers have rated this movie ${title}`;
   if (peerCount < numPi)
