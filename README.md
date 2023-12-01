@@ -176,3 +176,12 @@ weight(movie, userPrediction, madMovie) {
   // if the diff is 0, then the weight is 1, otherwise we return the rate
 }
 ```
+
+## Assignment 4
+
+We designed the why-not engines for Atomic; Group; and Position absenteeism with the consideration that only the top 20 similar users are used for calculating the why-not explanations. The idea is to aggregate the number of similar users that have rated the movie(s) in question, then count the average rating of the movie(s) that the similar user have rated. Then we:
+-  either compare the amount of similar peers that have rated the movie(s) to the aggregated peer count 
+-  or compare the average rating of the movie(s) with the lowest prediction of the top-k movies or the movie at the position in the top-k movies.
+Depending on the type of why-not engine, we return the appropriate message in correlation to the results of the comparison.
+
+The README.md file in the repository at the corresponding branch contains detailed instructions to run the code. Otherwise, the instructions are also provided below:
