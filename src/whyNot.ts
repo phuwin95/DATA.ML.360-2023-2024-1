@@ -12,6 +12,12 @@ type WhyNotResult = {
   score: number;
 };
 
+/**
+ * a function to find the peer count of similar users that have rated the movie and the average rating of the similar users
+ * @param movieId id of the movie
+ * @param similarUsers array contains info of similar users
+ * @returns peer count of how many similar users have rated the movie and the average rating of the similar users
+ */
 export const whyNotAtomic = (
   movieId: string,
   similarUsers: {
@@ -106,9 +112,8 @@ export const atomicEngine = (
     )}`;
 };
 
-
 /**
- * 
+ *
  * @param movieIds id of the movies that are part of the group
  * @param similarUsers array of similar users
  * @param predictions array of predictions
@@ -163,14 +168,14 @@ export const groupEngine = (
 };
 
 /**
- * 
+ *
  * @param movieId id of the movie
  * @param similarUsers array of similar users
  * @param predictions array of predictions
  * @param movies array of movie objects
  * @param rank position of the movie in the top-k movies
  * @param numPi threshold for counting top-k mvoies
- * @returns the reason why the movie is not higher or lower in the top-k movies
+ * @returns the reason why the movie is not higher in the top-k movies
  */
 export const positionAbsenteeismEngine = (
   movieId: string,
